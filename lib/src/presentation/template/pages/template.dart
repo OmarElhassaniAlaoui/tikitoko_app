@@ -1,10 +1,14 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 
 class Template extends StatelessWidget {
   const Template({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+      body: Center(
+        child: Text('Template'),
+      ),
+    );
   }
 }
