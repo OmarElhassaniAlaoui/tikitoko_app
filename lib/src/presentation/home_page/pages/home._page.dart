@@ -26,7 +26,7 @@ class HomePage extends GetView<HomeController> {
               const SizedBox(
                 height: 40,
               ),
-              const SayHelloWidget(),
+              SayHelloWidget(controller: homeController,),
               const SizedBox(
                 height: 20,
               ),

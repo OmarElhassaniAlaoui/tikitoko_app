@@ -19,7 +19,7 @@ class UserRepositoryImpl implements BaseUserRepository {
     if (await networkServiceImpl.isConnected()) {
       try {
         final remoteUserData = await userRemoteDataSource.getUser();
-        print(remoteUserData); 
+        print(remoteUserData);
         return Right(remoteUserData);
       } catch (e) {
         // Handle server error

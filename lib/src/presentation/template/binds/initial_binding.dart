@@ -3,6 +3,7 @@
 import 'package:get/get.dart';
 import 'package:tikto_app/src/app/core/services/api_service.dart';
 import 'package:tikto_app/src/app/services/http_service_impl.dart';
+import 'package:tikto_app/src/app/services/local_storage.dart';
 import 'package:tikto_app/src/app/services/network_service_impl.dart';
 import 'package:tikto_app/src/data/datasource/remote_data_sourece/user_remote_data_src.dart';
 import 'package:tikto_app/src/data/repositories/user_repository_impl.dart';
@@ -29,4 +30,6 @@ void initDependencies() {
   Get.put<GetUserUseCase>(GetUserUseCase(Get.find<BaseUserRepository>()));
   Get.put<TemplateController>(
       TemplateController(getUserUseCase: Get.find<GetUserUseCase>()));
+    // local storage
+  Get.putAsync(() => LocalStorageService().init());
 }
