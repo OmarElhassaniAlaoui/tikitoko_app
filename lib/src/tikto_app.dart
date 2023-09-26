@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tikto_app/src/app/routes/app_routes.dart';
 import 'package:tikto_app/src/presentation/template/pages/template.dart';
 
 class TiktoApp extends StatelessWidget {
@@ -14,7 +15,8 @@ class TiktoApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const Template(),
-      // getPages:routes,
+      initialRoute: '/',
+      getPages:routes,
     );
   }
 }
