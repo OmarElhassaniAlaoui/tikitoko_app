@@ -1,45 +1,21 @@
 
 import 'package:get/get.dart';
 
-class FeelingModel {
-  String? feeling;
-  String? feelingIcon;
-  RxBool? isFeelingPressed;
+class Feeling {
+  final String name;
+  final String feelingIcon;
+  final RxBool selected;
 
-  FeelingModel({
-    this.feeling,
-    this.feelingIcon,
-    this.isFeelingPressed,
-  });
+  Feeling(this.name , this.feelingIcon) : selected = false.obs;
 
-  static RxList<FeelingModel> getFeeling() {
-    
-    RxList<FeelingModel> feelings = <FeelingModel>[].obs;
-
-    feelings.add(FeelingModel(
-      feeling: 'Love',
-      feelingIcon: 'assets/images/love.png',
-      isFeelingPressed: false.obs,
-    ));
-
-    feelings.add(FeelingModel(
-      feeling: 'Cool',
-      feelingIcon: 'assets/images/cool.png',
-      isFeelingPressed: false.obs,
-    ));
-
-    feelings.add(FeelingModel(
-      feeling: 'Happy',
-      feelingIcon: 'assets/images/happy.png',
-      isFeelingPressed: false.obs,
-    ));
-
-    feelings.add(FeelingModel(
-      feeling: 'Sad',
-      feelingIcon: 'assets/images/sad.png',
-      isFeelingPressed: false.obs,
-    ));
-
-    return feelings;
+  //  a method to select this feeling and deselect others
+  void select() {
+    selected.value = true;
   }
+
+  //  a method to deselect this feeling
+  void deselect() {
+    selected.value = false;
+  }
+
 }
