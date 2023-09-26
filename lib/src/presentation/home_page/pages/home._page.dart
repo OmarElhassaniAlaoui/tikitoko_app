@@ -37,7 +37,7 @@ class HomePage extends GetView<HomeController> {
                 ),
               ),
               FeelingWidget(
-                homeController: homeController,
+
                 controller: controller,
               ),
               const Align(
