@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tikto_app/src/app/helpers/validators.dart';
+import 'package:tikto_app/src/app/routes/app_pages.dart';
+import 'package:tikto_app/src/app/services/local_storage.dart';
+import 'package:tikto_app/src/presentation/search_user/controller/search_user_controller.dart';
 
-class SearchUserPage extends StatelessWidget {
+class SearchUserPage extends GetView<SearchUserController> {
   SearchUserPage({Key? key}) : super(key: key);
   // create global key for form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -10,6 +14,7 @@ class SearchUserPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   final service = Get.put(LocalStorageService());
     return Scaffold(
       body: Center(
           child: Column(
@@ -35,12 +40,15 @@ class SearchUserPage extends StatelessWidget {
                   hintText: "@Username",
                   // labelText: '@Username',
                 ),
-                validator: Validator.validateUserName,
+                validator: (value) {
+                  Validator.validateUserName(value!, controller);
+                  service.sharedPreferences.setString("username", value);
+                },
               ),
             ),
           ),
           const SizedBox(height: 20),
-          SearchButton(formKey: _formKey),
+          SearchButton(formKey: _formKey,),
         ],
       )),
     );
@@ -51,21 +59,29 @@ class SearchButton extends StatelessWidget {
   const SearchButton({
     super.key,
     required GlobalKey<FormState> formKey,
+
   }) : _formKey = formKey;
 
   final GlobalKey<FormState> _formKey;
 
+
   @override
   Widget build(BuildContext context) {
+    Get.put(SearchUserController(getUserUseCase: Get.find()));
+
     return ElevatedButton(
         onPressed: () {
           if (_formKey.currentState!.validate()) {
+            _formKey.currentState!.save();
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Processing Data'),
               ),
             );
           }
+          Get.toNamed(
+            AppPages.home,
+          );
         },
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(200, 50),

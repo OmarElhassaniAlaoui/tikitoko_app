@@ -1,7 +1,7 @@
 import 'package:tikto_app/src/domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
-  UserModel({
+  const UserModel({
     required String nickname,
     required String avatarLarger,
     required String avatarThumb,

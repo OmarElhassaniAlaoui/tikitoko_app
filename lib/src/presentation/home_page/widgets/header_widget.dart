@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tikto_app/src/app/services/local_storage.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({
@@ -7,6 +9,7 @@ class HeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final service = Get.put(LocalStorageService());
     return Container(
       margin: const EdgeInsets.only(top: 20),
       child: ListTile(
@@ -18,15 +21,22 @@ class HeaderWidget extends StatelessWidget {
             color: Colors.grey,
             shape: BoxShape.circle,
           ),
-          child: const Padding(
+          child:  Padding(
             padding: EdgeInsets.all(4.0),
             child: CircleAvatar(
               backgroundImage: NetworkImage(
-                  'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'),
+                "${service.sharedPreferences.getString("avatarThumb")}"  
+                ),
             ),
           ),
         ),
-        title: const Text('Omar'),
+        title: Text(
+          '${service.sharedPreferences.getString("username")}',
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
         trailing: const Icon(Icons.notifications),
       ),
     );
