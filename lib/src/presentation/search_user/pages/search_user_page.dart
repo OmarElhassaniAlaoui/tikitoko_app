@@ -43,6 +43,7 @@ class SearchUserPage extends GetView<SearchUserController> {
                 validator: (value) {
                   Validator.validateUserName(value!, controller);
                   service.sharedPreferences.setString("username", value);
+                  return null;
                 },
               ),
             ),
@@ -72,7 +73,7 @@ class SearchButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: () {
           if (_formKey.currentState!.validate()) {
-            _formKey.currentState!.save();
+        
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Processing Data'),

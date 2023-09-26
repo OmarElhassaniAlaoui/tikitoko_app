@@ -12,6 +12,7 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.put(HomeController());
+
     return Scaffold(
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -38,7 +39,7 @@ class HomePage extends GetView<HomeController> {
               ),
               FeelingWidget(
 
-                controller: controller,
+                controller: homeController,
               ),
               const Align(
                 alignment: Alignment.center,

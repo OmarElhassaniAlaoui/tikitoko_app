@@ -1,0 +1,24 @@
+{
+    "MobileUserModule": {
+      "users": {
+        "x2b1": {
+          "id": "6808412325097194502",
+          "uniqueId": "x2b1",
+          "nickname": "x2b1",
+          "avatarLarger": "https://p16-sign-va.tiktokcdn.com/musically-maliva-obj/1663436854805510~c5_1080x1080.jpeg?x-expires=1692550800&x-signature=RhhATpq4%2BlnXz6tquicH6gO6xwQ%3D",
+          "avatarMedium": "https://p16-sign-va.tiktokcdn.com/musically-maliva-obj/1663436854805510~c5_720x720.jpeg?x-expires=1692550800&x-signature=MQK7Q%2FT7HpLcifzNE7ffxDUHArM%3D",
+          "avatarThumb": "https://p16-sign-va.tiktokcdn.com/musically-maliva-obj/1663436854805510~c5_100x100.jpeg?x-expires=1692550800&x-signature=Fvt8JLWe7mloJ9u5b7C%2FcwuNUZQ%3D"
+        }
+      },
+      "stats": {
+        "x2b1": {
+          "followerCount": 103200,
+          "followingCount": 114,
+          "heart": 37500,
+          "heartCount": 37500,
+          "videoCount": 40,
+          "diggCount": 0
+        }
+      }
+    }
+  }

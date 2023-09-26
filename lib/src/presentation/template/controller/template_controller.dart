@@ -18,4 +18,9 @@ class TemplateController extends GetxController {
     service.sharedPreferences.setString("avatarLarger",userList[0].avatarLarger);
     service.sharedPreferences.setString("avatarThumb",userList[0].avatarThumb);
   }
+  @override
+  void onInit() {
+    fetchUser();
+    super.onInit();
+  }
 }
