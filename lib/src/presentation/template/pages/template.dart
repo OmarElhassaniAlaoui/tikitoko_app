@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tikto_app/src/presentation/home_page/pages/home._page.dart';
+import 'package:tikto_app/src/presentation/template/controller/template_controller.dart';
+import 'package:tikto_app/src/presentation/template/widgets/show_data_widget.dart';
 
-class Template extends StatelessWidget {
+class Template extends GetView<TemplateController> {
   const Template({super.key});
 
   @override
@@ -15,9 +16,11 @@ class Template extends StatelessWidget {
             const Text('Template'),
             ElevatedButton(
                 onPressed: () {
-                  Get.to(() => const HomePage());
+                  controller.fetchUser();
+                  
                 },
-                child: const Text('Button'))
+                child: const Text('Button')),
+            ShowDataWidget(controller:controller), 
           ],
         ),
       ),

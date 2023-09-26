@@ -8,7 +8,7 @@ import 'package:tikto_app/src/presentation/template/pages/template.dart';
 List<GetPage<dynamic>> routes = [
   GetPage(
     name: "/",
-    page: () => const Template(),
+    page: () =>  Template(),
   ),
   GetPage(
     name: '/homePage',
