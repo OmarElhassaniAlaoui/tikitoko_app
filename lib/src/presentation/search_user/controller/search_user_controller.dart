@@ -16,7 +16,8 @@ Future<void> fetchUser() async {
       (failure) => print(failure), // Handle error
       (users) => userList.assignAll(users),
     );
-  }
+}
+
 
 
 

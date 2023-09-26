@@ -9,9 +9,7 @@ class LocalStorageService extends GetxService {
     return this;
   }
 
-  initialService() async {
-    await Get.putAsync(() => LocalStorageService().init()); 
-  }
+ 
 
   // static Future<void> saveData(String key, String value) async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -27,4 +25,7 @@ class LocalStorageService extends GetxService {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   prefs.remove(key);
   // }
+}
+ initialService() async {
+    await Get.putAsync(() => LocalStorageService().init()); 
 }
