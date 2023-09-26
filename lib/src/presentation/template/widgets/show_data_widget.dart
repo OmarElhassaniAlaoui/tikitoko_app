@@ -12,17 +12,32 @@ class ShowDataWidget extends StatelessWidget {
         height: 300,
         width: 300,
         child: Obx(() {
-          if (controller.userList.isEmpty) {
+          if (controller.userStateList.isEmpty) {
             return const Center(child: CircularProgressIndicator());
           } else {
             return Column(
               children: [
-                Text(controller.userList[0].nickname),
-                Text(controller.userList[0].avatarThumb),
-                Text(controller.userList[0].avatarLarger),
+                Text(controller.userStateList[0].followerCount.toString()),
+                Text(controller.userStateList[0].followingCount.toString()),
+                Text(controller.userStateList[0].videoCount.toString()),
+                Text(controller.userStateList[0].diggCount.toString()),  
               ],
             );
           }
+
+
+
+          // if (controller.userList.isEmpty) {
+          //   return const Center(child: CircularProgressIndicator());
+          // } else {
+          //   return Column(
+          //     children: [
+          //       Text(controller.userList[0].nickname),
+          //       Text(controller.userList[0].avatarThumb),
+          //       Text(controller.userList[0].avatarLarger),
+          //     ],
+          //   );
+          // }
         }));
   }
 }
