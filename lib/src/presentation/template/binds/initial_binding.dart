@@ -11,6 +11,7 @@ import 'package:tikto_app/src/domain/repositories/user_repository.dart';
 import 'package:tikto_app/src/domain/usecases/get_following_list_usecase.dart';
 import 'package:tikto_app/src/domain/usecases/get_user_state_usecase.dart';
 import 'package:tikto_app/src/domain/usecases/get_user_usecase.dart';
+import 'package:tikto_app/src/presentation/following_page/controller/following_page_controller.dart';
 import 'package:tikto_app/src/presentation/template/controller/template_controller.dart';
 import 'package:http/http.dart' as http;
 
@@ -31,9 +32,9 @@ void initDependencies() {
   );
   Get.put<GetUserUseCase>(GetUserUseCase(Get.find<BaseUserRepository>()));
   Get.put<GetUserStateUsecase>(GetUserStateUsecase(Get.find<BaseUserRepository>()));
-  Get.put<GetFollowingListUseCase>(GetFollowingListUseCase(Get.find<BaseUserRepository>()));
-  Get.put<TemplateController>(
-      TemplateController(getFollowingListUseCase: Get.find<GetFollowingListUseCase>()));
+  Get.put<GetUsersListUseCase>(GetUsersListUseCase(Get.find<BaseUserRepository>()));
+  Get.put<TemplateController>(TemplateController(getUsersListUseCase: Get.find<GetUsersListUseCase>()));
+  
   
 
   // Get.put<TemplateController>(

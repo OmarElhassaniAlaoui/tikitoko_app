@@ -1,26 +1,26 @@
 import 'package:get/get.dart';
-import 'package:tikto_app/src/app/services/local_storage.dart';
-import 'package:tikto_app/src/domain/entities/following_entity.dart';
+import 'package:tikto_app/src/domain/entities/following_entities/users_entity.dart';
 import 'package:tikto_app/src/domain/usecases/get_following_list_usecase.dart';
 
-
 class TemplateController extends GetxController {
-  final GetFollowingListUseCase getFollowingListUseCase;
-  final RxList<UserFollowingListEntity> userFollowingList =
-      RxList<UserFollowingListEntity>([]);
-  TemplateController({required this.getFollowingListUseCase});
-  LocalStorageService service = Get.find<LocalStorageService>();
-
-  Future<void> fetchFollowingList() async {
-    final result = await getFollowingListUseCase.call();
+  final GetUsersListUseCase getUsersListUseCase;
+  final RxList<UsersEntity> userList = RxList<UsersEntity>([]); 
+  TemplateController({required this.getUsersListUseCase});
+  Future<void> fetchUsersList() async {
+    final result = await getUsersListUseCase.call();
     result.fold(
       (failure) => print(failure), // Handle error
-      (users) => userFollowingList.assignAll(users),
+      (users) => userList.assignAll(users),
     );
-
   }
+  
 
 
+  @override
+  void onInit() {
+    fetchUsersList();
+    super.onInit();
+  }
 
 
 
@@ -41,8 +41,10 @@ class TemplateController extends GetxController {
 
   // // this for get userState data from api
   // final GetUserStateUsecase getUserStateUsecase;
+
   // final RxList<UserStateEntity> userStateList = RxList<UserStateEntity>([]);
   // TemplateController({required this.getUserStateUsecase});
+
   // LocalStorageService service = Get.find<LocalStorageService>();
 
   // Future<void> fetchUserState() async {
@@ -78,11 +80,11 @@ class TemplateController extends GetxController {
   //   service.sharedPreferences.setString("avatarThumb",userList[0].avatarThumb);
   // }
 
-  @override
-  void onInit() {
-    fetchFollowingList();
-    // fetchUserState();
-    // fetchUser();
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+
+  //   // fetchUserState();
+  //   // fetchUser();
+  //   super.onInit();
+  // }
 }
