@@ -7,7 +7,4 @@ class FeelinController extends GetxController {
     isFeelingPressed.value = !isFeelingPressed.value;
   }
 
-   
-
-
 }

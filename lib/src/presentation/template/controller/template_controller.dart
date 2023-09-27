@@ -25,6 +25,8 @@ class TemplateController extends GetxController {
         .setInt("followingCount", userStateList[0].followingCount);
     service.sharedPreferences.setInt("videoCount", userStateList[0].videoCount);
     service.sharedPreferences.setInt("diggCount", userStateList[0].diggCount);
+    service.sharedPreferences.setInt("heartCount", userStateList[0].heartCount);
+    
   }
 
   //note:this for  getuser data from api

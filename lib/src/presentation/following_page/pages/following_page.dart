@@ -9,7 +9,7 @@ class FollwingListPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Followers List'),
+          title: const Text('Following List'),
         ),
         body: const FollowingListTailWidget() , 
       ),

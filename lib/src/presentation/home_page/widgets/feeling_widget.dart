@@ -39,7 +39,8 @@ class FeelingWidget extends StatelessWidget {
                         onTap: () {
                           controller.toggleFeeling(index);
                         },
-                        child: Image.asset(
+                        child:
+                         Image.asset(
                           controller.feelings[index].feelingIcon,
                           fit: BoxFit.contain,
                         ),

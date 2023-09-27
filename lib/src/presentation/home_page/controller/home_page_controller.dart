@@ -11,10 +11,8 @@ class HomeController extends GetxController {
     Feeling("Cool", "assets/images/cool.png"),
     Feeling("Sad", "assets/images/sad.png"),
   ].obs;
+  
   LocalStorageService service = Get.find<LocalStorageService>();
-
-
-
 
   final RxInt selectedFeelingIndex = RxInt(-1);
   Future<void> toggleFeeling(int index) async {
