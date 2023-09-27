@@ -20,7 +20,7 @@ List<GetPage<dynamic>> routes = [
   ),
   GetPage(
     name: '/following-list',
-    page: () => const FollwingListPage(),
+    page: () =>  FollwingListPage(),
   ),
   GetPage(
     name: '/followers-list',

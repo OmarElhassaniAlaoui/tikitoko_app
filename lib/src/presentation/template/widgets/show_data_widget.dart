@@ -12,18 +12,36 @@ class ShowDataWidget extends StatelessWidget {
         height: 300,
         width: 300,
         child: Obx(() {
-          if (controller.userStateList.isEmpty) {
+          if (controller.userList.isEmpty) {
             return const Center(child: CircularProgressIndicator());
           } else {
             return Column(
               children: [
-                Text(controller.userStateList[0].followerCount.toString()),
-                Text(controller.userStateList[0].followingCount.toString()),
-                Text(controller.userStateList[0].videoCount.toString()),
-                Text(controller.userStateList[0].diggCount.toString()),  
+                Text(controller.userList[0].stats.followerCount.toString()),
+                Text(controller.userList[0].stats.followingCount.toString()),
+                Text(controller.userList[0].stats.videoCount.toString()),
               ],
             );
           }
+    }));
+  }
+}
+
+
+
+
+ // if (controller.userStateList.isEmpty) {
+          //   return const Center(child: CircularProgressIndicator());
+          // } else {
+          //   return Column(
+          //     children: [
+          //       Text(controller.userStateList[0].followerCount.toString()),
+          //       Text(controller.userStateList[0].followingCount.toString()),
+          //       Text(controller.userStateList[0].videoCount.toString()),
+          //       Text(controller.userStateList[0].diggCount.toString()),  
+          //     ],
+          //   );
+          // }
 
 
 
@@ -38,6 +56,3 @@ class ShowDataWidget extends StatelessWidget {
           //     ],
           //   );
           // }
-        }));
-  }
-}
