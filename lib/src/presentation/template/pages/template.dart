@@ -17,6 +17,7 @@ class Template extends GetView<TemplateController> {
             const Text('Template'),
             ElevatedButton(
                 onPressed: () {
+                  controller.fetchFollowingList();
                   // controller.fetchUserState();
                   // controller.fetchUser();
                   Get.toNamed(AppPages.searchUser); 

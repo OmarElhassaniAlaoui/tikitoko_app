@@ -50,7 +50,7 @@ class AccountStatWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SvgPicture.asset(
-                          homeController.accountStatList[index].icon!,
+                          homeController.accountStatList[index].icon,
                           height: 40,
                           width: 40,
                         ),

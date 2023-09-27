@@ -1,33 +1,66 @@
 import 'package:get/get.dart';
 import 'package:tikto_app/src/app/services/local_storage.dart';
-import 'package:tikto_app/src/domain/entities/user_entity.dart';
-import 'package:tikto_app/src/domain/entities/user_state_entity.dart';
-import 'package:tikto_app/src/domain/usecases/get_user_state_usecase.dart';
-import 'package:tikto_app/src/domain/usecases/get_user_usecase.dart';
+import 'package:tikto_app/src/domain/entities/following_entity.dart';
+import 'package:tikto_app/src/domain/usecases/get_following_list_usecase.dart';
+
 
 class TemplateController extends GetxController {
-  // this for get userState data from api
-  final GetUserStateUsecase getUserStateUsecase;
-  final RxList<UserStateEntity> userStateList = RxList<UserStateEntity>([]);
-  TemplateController({required this.getUserStateUsecase});
+  final GetFollowingListUseCase getFollowingListUseCase;
+  final RxList<UserFollowingListEntity> userFollowingList =
+      RxList<UserFollowingListEntity>([]);
+  TemplateController({required this.getFollowingListUseCase});
   LocalStorageService service = Get.find<LocalStorageService>();
 
-  Future<void> fetchUserState() async {
-    final result = await getUserStateUsecase.call();
+  Future<void> fetchFollowingList() async {
+    final result = await getFollowingListUseCase.call();
     result.fold(
       (failure) => print(failure), // Handle error
-      (users) => userStateList.assignAll(users),
+      (users) => userFollowingList.assignAll(users),
     );
 
-    service.sharedPreferences
-        .setInt("followerCount", userStateList[0].followerCount);
-    service.sharedPreferences
-        .setInt("followingCount", userStateList[0].followingCount);
-    service.sharedPreferences.setInt("videoCount", userStateList[0].videoCount);
-    service.sharedPreferences.setInt("diggCount", userStateList[0].diggCount);
-    service.sharedPreferences.setInt("heartCount", userStateList[0].heartCount);
-    
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // // this for get userState data from api
+  // final GetUserStateUsecase getUserStateUsecase;
+  // final RxList<UserStateEntity> userStateList = RxList<UserStateEntity>([]);
+  // TemplateController({required this.getUserStateUsecase});
+  // LocalStorageService service = Get.find<LocalStorageService>();
+
+  // Future<void> fetchUserState() async {
+  //   final result = await getUserStateUsecase.call();
+  //   result.fold(
+  //     (failure) => print(failure), // Handle error
+  //     (users) => userStateList.assignAll(users),
+  //   );
+
+  //   service.sharedPreferences
+  //       .setInt("followerCount", userStateList[0].followerCount);
+  //   service.sharedPreferences
+  //       .setInt("followingCount", userStateList[0].followingCount);
+  //   service.sharedPreferences.setInt("videoCount", userStateList[0].videoCount);
+  //   service.sharedPreferences.setInt("diggCount", userStateList[0].diggCount);
+  //   service.sharedPreferences.setInt("heartCount", userStateList[0].heartCount);
+    
+  // }
 
   //note:this for  getuser data from api
   // final GetUserUseCase getUserUseCase;
@@ -47,7 +80,8 @@ class TemplateController extends GetxController {
 
   @override
   void onInit() {
-    fetchUserState();
+    fetchFollowingList();
+    // fetchUserState();
     // fetchUser();
     super.onInit();
   }

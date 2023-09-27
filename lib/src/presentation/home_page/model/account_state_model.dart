@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:tikto_app/src/app/routes/app_pages.dart';
 import 'package:tikto_app/src/app/services/local_storage.dart';
 import 'package:tikto_app/src/app/themes/app_palette.dart';
-import 'package:tikto_app/src/presentation/home_page/controller/user_state_controller.dart';
 
 class AccountStatModel  {
   final String title;
