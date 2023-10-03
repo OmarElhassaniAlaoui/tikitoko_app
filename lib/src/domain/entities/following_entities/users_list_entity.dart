@@ -5,7 +5,7 @@ import 'users_entity.dart';
 class UserListEntity extends Equatable {
   final List<UsersEntity> userList;
 
-  UserListEntity({
+  const UserListEntity({
     required this.userList,
   });
 

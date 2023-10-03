@@ -21,11 +21,11 @@ class UserRepositoryImpl implements BaseUserRepository {
     if (await networkServiceImpl.isConnected()) {
       try {
         final remoteUserData = await userRemoteDataSource.getUser();
-        print(remoteUserData);
+
         return Right(remoteUserData);
       } catch (e) {
         // Handle server error
-        print(e);
+
         return Left(ServerFailure());
       }
     } else {
@@ -39,11 +39,11 @@ class UserRepositoryImpl implements BaseUserRepository {
     if (await networkServiceImpl.isConnected()) {
       try {
         final remoteUserData = await userRemoteDataSource.getUserState();
-        print(remoteUserData);
+
         return Right(remoteUserData);
       } catch (e) {
         // Handle server error
-        print(e);
+
         return Left(ServerFailure());
       }
     } else {
@@ -57,11 +57,11 @@ class UserRepositoryImpl implements BaseUserRepository {
     if (await networkServiceImpl.isConnected()) {
       try {
         final usersListData = await userRemoteDataSource.getUsersList();
-        print(usersListData);
+       
         return Right(usersListData);
       } catch (e) {
         // Handle server error
-        print(e);
+        
         return Left(ServerFailure());
       }
     } else {

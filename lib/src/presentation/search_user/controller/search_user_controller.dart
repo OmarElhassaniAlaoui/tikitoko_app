@@ -13,7 +13,12 @@ LocalStorageService service = Get.find<LocalStorageService>();
 Future<void> fetchUser() async {
     final result = await getUserUseCase.call();
     result.fold(
-      (failure) => print(failure), // Handle error
+      (failure) => Get.defaultDialog( 
+        title: "Error",
+        middleText: failure.toString(),
+        textConfirm: "Ok",
+        onConfirm: () => Get.back(),
+      )  ,// Handle error
       (users) => userList.assignAll(users),
     );
 }
