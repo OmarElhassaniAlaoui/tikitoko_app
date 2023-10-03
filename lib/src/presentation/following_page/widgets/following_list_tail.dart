@@ -23,7 +23,10 @@ class FollowingListTailWidget extends StatelessWidget {
             ),
           ]),
       child: ListTile(
-          title: Text(followingPageController.userList[index].user.nickname),
+          title: Text(
+            followingPageController.userList[index].user.nickname,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
           subtitle: Row(
             children: [
               SizedBox(
@@ -31,7 +34,6 @@ class FollowingListTailWidget extends StatelessWidget {
                   children: [
                     SvgPicture.asset(
                       'assets/icons/person.svg',
-                      color: Colors.black,
                       height: 20,
                       width: 20,
                     ),
@@ -40,6 +42,10 @@ class FollowingListTailWidget extends StatelessWidget {
                     ),
                     Text(
                         '${followingPageController.userList[index].stats.followingCount}'),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const Text('Following'),
                   ],
                 ),
               ),
@@ -51,7 +57,6 @@ class FollowingListTailWidget extends StatelessWidget {
                   children: [
                     SvgPicture.asset(
                       'assets/icons/heart.svg',
-                      color: Colors.black,
                       height: 20,
                       width: 20,
                     ),
@@ -59,7 +64,12 @@ class FollowingListTailWidget extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                        '${followingPageController.userList[index].stats.heartCount}'),
+                      '${followingPageController.userList[index].stats.heartCount}',
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const Text('Likes'),
                   ],
                 ),
               ),
@@ -70,7 +80,6 @@ class FollowingListTailWidget extends StatelessWidget {
             backgroundImage: NetworkImage(
                 followingPageController.userList[index].user.avatarThumb),
           ),
-          trailing: const Icon(Icons.arrow_forward_ios),
           onTap: () {
             // show image of user in dialog
             showDialog(
@@ -78,9 +87,10 @@ class FollowingListTailWidget extends StatelessWidget {
               builder: (context) {
                 return AlertDialog(
                   content: Image.network(
-                    followingPageController.userList[index].user.avatarLarger,
-                    fit: BoxFit.cover,
-                  ),
+                          followingPageController.userList[index].user
+                              .avatarLarger,
+                          fit: BoxFit.cover,
+                        ),
                 );
               },
             );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tikto_app/src/app/routes/app_routes.dart';
-import 'package:tikto_app/src/presentation/template/pages/template.dart';
+import 'package:tikto_app/src/presentation/welcome_page/pages/welcome_page.dart';
 
 class TiktoApp extends StatelessWidget {
   const TiktoApp({super.key});
@@ -14,7 +14,7 @@ class TiktoApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Template(),
+      home:  WelcomePage(),
       initialRoute: '/',
       getPages: routes,
     );

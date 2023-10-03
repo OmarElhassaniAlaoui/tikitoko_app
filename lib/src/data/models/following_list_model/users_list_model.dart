@@ -2,7 +2,7 @@ import 'package:tikto_app/src/data/models/following_list_model/users_model.dart'
 import 'package:tikto_app/src/domain/entities/following_entities/users_list_entity.dart';
 
 class UserListModel extends UserListEntity {
-  UserListModel({
+  const UserListModel({
     required List<UsersModel> userList,
   }) : super(
           userList: userList,

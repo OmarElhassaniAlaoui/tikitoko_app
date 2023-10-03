@@ -12,7 +12,12 @@ class UserStateController extends GetxController {
   Future<void> fetchUserState() async {
     final result = await getUserStateUsecase.call();
     result.fold(
-      (failure) => print(failure), // Handle error
+      (failure) =>  Get.defaultDialog( 
+        title: "Error",
+        middleText: failure.toString(),
+        textConfirm: "Ok",
+        onConfirm: () => Get.back(),
+      )  ,  // Handle error
       (users) => userStateList.assignAll(users),
     );
 

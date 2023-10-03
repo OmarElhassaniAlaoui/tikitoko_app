@@ -72,8 +72,7 @@ class SearchButton extends StatelessWidget {
 
     return ElevatedButton(
         onPressed: () {
-          if (_formKey.currentState!.validate()) {
-        
+          if (_formKey.currentState!.validate()) {    
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Processing Data'),

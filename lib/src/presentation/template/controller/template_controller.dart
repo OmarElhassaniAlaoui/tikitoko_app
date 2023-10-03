@@ -9,10 +9,16 @@ class TemplateController extends GetxController {
   Future<void> fetchUsersList() async {
     final result = await getUsersListUseCase.call();
     result.fold(
-      (failure) => print(failure), // Handle error
+      (failure) => Get.defaultDialog( 
+        title: "Error",
+        middleText: failure.toString(),
+        textConfirm: "Ok",
+        onConfirm: () => Get.back(),
+      )  ,  // Handle error
       (users) => userList.assignAll(users),
     );
-  }
+  } 
+  
   
 
 
