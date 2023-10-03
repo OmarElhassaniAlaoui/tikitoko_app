@@ -9,6 +9,7 @@ import 'package:tikto_app/src/domain/repositories/user_repository.dart';
 import 'package:tikto_app/src/domain/usecases/get_following_list_usecase.dart';
 import 'package:tikto_app/src/domain/usecases/get_user_state_usecase.dart';
 import 'package:tikto_app/src/domain/usecases/get_user_usecase.dart';
+import 'package:tikto_app/src/presentation/search_user/controller/search_user_controller.dart';
 import 'package:tikto_app/src/presentation/template/controller/template_controller.dart';
 import 'package:http/http.dart' as http;
 
@@ -40,5 +41,9 @@ void initDependencies() {
   //     TemplateController(getUserStateUsecase: Get.find<GetUserStateUsecase>()));
   // local storage
   Get.putAsync(() => LocalStorageService().init());
-  Get.lazyPut(()=>NetworkServiceImpl());
+  Get.lazyPut(()=>NetworkServiceImpl()); 
+
+  Get.lazyPut(() => SearchUserController(
+      getUserUseCase: Get.find<GetUserUseCase>(), 
+    ));  
 }

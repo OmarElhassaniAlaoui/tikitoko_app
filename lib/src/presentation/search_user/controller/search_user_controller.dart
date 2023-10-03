@@ -3,27 +3,32 @@ import 'package:tikto_app/src/app/services/local_storage.dart';
 import 'package:tikto_app/src/domain/entities/user_entity.dart';
 import 'package:tikto_app/src/domain/usecases/get_user_usecase.dart';
 
-class SearchUserController extends GetxController { 
-final GetUserUseCase getUserUseCase;
-final RxList<UserEntity> userList = RxList<UserEntity>([]);
-SearchUserController({required this.getUserUseCase});
+class SearchUserController extends GetxController {
+  final GetUserUseCase getUserUseCase;
+  final RxList<UserEntity> userList = RxList<UserEntity>([]);
 
-LocalStorageService service = Get.find<LocalStorageService>();
+  SearchUserController({required this.getUserUseCase});
 
-Future<void> fetchUser() async {
+  LocalStorageService service = Get.find<LocalStorageService>();
+
+  RxBool isLoading = false.obs;
+
+  Future<void> fetchUser() async {
     final result = await getUserUseCase.call();
     result.fold(
-      (failure) => Get.defaultDialog( 
+      (failure) => Get.defaultDialog(
         title: "Error",
         middleText: failure.toString(),
         textConfirm: "Ok",
         onConfirm: () => Get.back(),
-      )  ,// Handle error
+      ), // Handle error
       (users) => userList.assignAll(users),
     );
-}
+  }
 
-
-
-
+  @override
+  void onInit() {
+    fetchUser();
+    super.onInit();
+  }
 }
