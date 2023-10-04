@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:tikto_app/src/app/services/local_storage.dart';
 import 'package:tikto_app/src/domain/entities/user_entity.dart';
@@ -18,7 +19,8 @@ class SearchUserController extends GetxController {
     result.fold(
       (failure) => Get.defaultDialog(
         title: "Error",
-        middleText: failure.toString(),
+        middleText: "No internet connection",
+        content: SvgPicture.asset("assets/icons/wifi.svg"),
         textConfirm: "Ok",
         onConfirm: () => Get.back(),
       ), // Handle error
@@ -31,4 +33,5 @@ class SearchUserController extends GetxController {
     fetchUser();
     super.onInit();
   }
+
 }
