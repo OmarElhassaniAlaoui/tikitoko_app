@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:tikto_app/src/app/helpers/number_shorter.dart';
 import 'package:tikto_app/src/app/services/local_storage.dart';
 import 'package:tikto_app/src/presentation/home_page/model/account_state_model.dart';
 import 'package:tikto_app/src/presentation/home_page/model/feeling_model.dart';
@@ -11,9 +12,13 @@ class HomeController extends GetxController {
     Feeling("Cool", "assets/images/cool.png"),
     Feeling("Sad", "assets/images/sad.png"),
   ].obs;
-  
-  LocalStorageService service = Get.find<LocalStorageService>();
+  NumberShorter numberShorter = NumberShorter(); 
 
+  String shortNumber(int number) {
+    return numberShorter.shorten(number);
+  }
+
+  LocalStorageService service = Get.find<LocalStorageService>();
   final RxInt selectedFeelingIndex = RxInt(-1);
   Future<void> toggleFeeling(int index) async {
     final prefs = await SharedPreferences.getInstance();

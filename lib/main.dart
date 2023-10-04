@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:tikto_app/src/app/services/dependency_injection.dart';
 import 'package:tikto_app/src/app/services/local_storage.dart';
@@ -8,5 +9,10 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await initialService() ; 
   initDependencies();
-  runApp(const TiktoApp());
+  runApp( 
+    DevicePreview(
+      enabled: true,
+      builder: (context) => const TiktoApp(),
+    )
+  );
 }

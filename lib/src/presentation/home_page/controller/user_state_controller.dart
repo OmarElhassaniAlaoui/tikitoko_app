@@ -8,35 +8,44 @@ class UserStateController extends GetxController {
   final RxList<UserStateEntity> userStateList = RxList<UserStateEntity>([]);
   UserStateController({required this.getUserStateUsecase});
 
+
+
   LocalStorageService service = Get.find<LocalStorageService>();
   Future<void> fetchUserState() async {
     final result = await getUserStateUsecase.call();
     result.fold(
-      (failure) =>  Get.defaultDialog( 
+      (failure) => Get.defaultDialog(
         title: "Error",
         middleText: failure.toString(),
         textConfirm: "Ok",
         onConfirm: () => Get.back(),
-      )  ,  // Handle error
+      ), // Handle error
       (users) => userStateList.assignAll(users),
     );
 
     service.sharedPreferences.setInt(
-      "followerCount", userStateList[0].followerCount,
+      "followerCount",
+      userStateList[0].followerCount,
     );
     service.sharedPreferences.setInt(
-      "followingCount", userStateList[0].followingCount,
+      "followingCount",
+      userStateList[0].followingCount,
     );
     service.sharedPreferences.setInt(
-      "heartCount", userStateList[0].heartCount,
+      "heartCount",
+      userStateList[0].heartCount,
     );
     service.sharedPreferences.setInt(
-      "videoCount", userStateList[0].videoCount,
+      "videoCount",
+      userStateList[0].videoCount,
     );
     service.sharedPreferences.setInt(
-      "diggCount", userStateList[0].diggCount,
+      "diggCount",
+      userStateList[0].diggCount,
     );
   }
+
+ 
 
   @override
   void onInit() {

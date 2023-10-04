@@ -13,7 +13,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.put(HomeController());
-    final UserStateController userStateController = Get.put(UserStateController(getUserStateUsecase: Get.find()));
+    final UserStateController userStateController =
+        Get.put(UserStateController(getUserStateUsecase: Get.find()));
 
     return Scaffold(
       body: ListView(
@@ -29,7 +30,9 @@ class HomePage extends StatelessWidget {
               const SizedBox(
                 height: 40,
               ),
-              SayHelloWidget(controller: homeController,),
+              SayHelloWidget(
+                controller: homeController,
+              ),
               const SizedBox(
                 height: 20,
               ),
@@ -55,7 +58,10 @@ class HomePage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              AccountStatWidget(homeController: homeController , userStateController: userStateController,),
+              AccountStatWidget(
+                homeController: homeController,
+                userStateController: userStateController,
+              ),
               const SizedBox(
                 height: 20,
               ),
