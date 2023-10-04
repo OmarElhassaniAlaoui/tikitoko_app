@@ -27,6 +27,7 @@ class AccountStatWidget extends StatelessWidget {
             crossAxisCount: 2,
             mainAxisSpacing: 15,
             crossAxisSpacing: 15,
+            childAspectRatio: 0.5,
           ),
           itemCount: homeController.accountStatList.length,
           itemBuilder: (context, index) {
@@ -59,7 +60,8 @@ class AccountStatWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      homeController.shortNumber(homeController.accountStatList[index].value),
+                      homeController.shortNumber(
+                          homeController.accountStatList[index].value),
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

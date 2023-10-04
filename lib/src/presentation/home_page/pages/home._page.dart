@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tikto_app/src/presentation/home_page/controller/home_page_controller.dart';
 import 'package:tikto_app/src/presentation/home_page/controller/user_state_controller.dart';
 import 'package:tikto_app/src/presentation/home_page/widgets/account_state_widget.dart';
+import 'package:tikto_app/src/presentation/home_page/widgets/account_state_widget_redesgined.dart';
 import 'package:tikto_app/src/presentation/home_page/widgets/feeling_widget.dart';
 import 'package:tikto_app/src/presentation/home_page/widgets/header_widget.dart';
 import 'package:tikto_app/src/presentation/home_page/widgets/say_hello.dart';
@@ -58,7 +59,7 @@ class HomePage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              AccountStatWidget(
+              AccountStateRedesigned(
                 homeController: homeController,
                 userStateController: userStateController,
               ),

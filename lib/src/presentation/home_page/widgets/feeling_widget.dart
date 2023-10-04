@@ -30,7 +30,7 @@ class FeelingWidget extends StatelessWidget {
                       width: 80,
                       decoration: BoxDecoration(
                         color:
-                            feeling.selected.value ? Colors.blue : Colors.grey,
+                            feeling.selected.value ? Colors.green : Colors.grey,
                         shape: BoxShape.circle,
                       ),
                       child: GestureDetector(
