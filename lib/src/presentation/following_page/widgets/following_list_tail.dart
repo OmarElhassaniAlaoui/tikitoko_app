@@ -40,8 +40,9 @@ class FollowingListTailWidget extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    Text(
-                        '${followingPageController.userList[index].stats.followingCount}'),
+                    Text(followingPageController.shurtNumber(
+                        followingPageController
+                            .userList[index].stats.followingCount)),
                     const SizedBox(
                       width: 5,
                     ),
@@ -64,7 +65,9 @@ class FollowingListTailWidget extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      '${followingPageController.userList[index].stats.heartCount}',
+                      followingPageController.shurtNumber(
+                          followingPageController
+                              .userList[index].stats.heartCount),
                     ),
                     const SizedBox(
                       width: 5,
@@ -81,16 +84,14 @@ class FollowingListTailWidget extends StatelessWidget {
                 followingPageController.userList[index].user.avatarThumb),
           ),
           onTap: () {
-            // show image of user in dialog
             showDialog(
               context: context,
               builder: (context) {
                 return AlertDialog(
                   content: Image.network(
-                          followingPageController.userList[index].user
-                              .avatarLarger,
-                          fit: BoxFit.cover,
-                        ),
+                    followingPageController.userList[index].user.avatarLarger,
+                    fit: BoxFit.cover,
+                  ),
                 );
               },
             );

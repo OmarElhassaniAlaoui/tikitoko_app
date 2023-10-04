@@ -5,17 +5,15 @@ import 'package:tikto_app/src/presentation/home_page/controller/home_page_contro
 class FeelingWidget extends StatelessWidget {
   const FeelingWidget({
     super.key,
-
     required this.controller,
   });
-
 
   final HomeController controller;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 200,
+        height: 150,
         child: ListView.builder(
           itemCount: controller.feelings.length,
           scrollDirection: Axis.horizontal,
@@ -39,8 +37,7 @@ class FeelingWidget extends StatelessWidget {
                         onTap: () {
                           controller.toggleFeeling(index);
                         },
-                        child:
-                         Image.asset(
+                        child: Image.asset(
                           controller.feelings[index].feelingIcon,
                           fit: BoxFit.contain,
                         ),

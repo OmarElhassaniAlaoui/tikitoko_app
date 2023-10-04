@@ -59,7 +59,7 @@ class AccountStatWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${homeController.accountStatList[index].value}',
+                      homeController.shortNumber(homeController.accountStatList[index].value),
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
