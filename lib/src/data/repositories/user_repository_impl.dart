@@ -8,13 +8,14 @@ import 'package:tikto_app/src/domain/entities/user_state_entity.dart';
 import 'package:tikto_app/src/domain/repositories/user_repository.dart';
 
 class UserRepositoryImpl implements BaseUserRepository {
-  final BaseUserRemoteDataSource userRemoteDataSource;
-  final NetworkServiceImpl networkServiceImpl;
 
   UserRepositoryImpl({
     required this.userRemoteDataSource,
     required this.networkServiceImpl,
   });
+
+  final BaseUserRemoteDataSource userRemoteDataSource;
+  final NetworkServiceImpl networkServiceImpl;
 
   @override
   Future<Either<Failure, List<UserEntity>>> getUser() async {
