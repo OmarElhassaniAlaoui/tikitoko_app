@@ -30,7 +30,7 @@ class WelcomePage extends GetView<WelcomePageController> {
             ),
             OutlinedButton(
                 onPressed: () {
-                  Get.toNamed(AppPages.searchUser);
+                  Get.toNamed(AppPages.loginPage);
                 },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.black,

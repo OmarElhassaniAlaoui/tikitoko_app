@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tikto_app/src/app/routes/app_pages.dart';
 import 'package:tikto_app/src/app/services/local_storage.dart';
+import 'package:tikto_app/src/app/widgets/buttom_widget.dart';
 import 'package:tikto_app/src/presentation/search_user/controller/search_user_controller.dart';
 
 class SearchUserPage extends GetView<SearchUserController> {
@@ -56,7 +57,10 @@ class SearchUserPage extends GetView<SearchUserController> {
             ),
           ),
           const SizedBox(height: 20),
-          ElevatedButton(
+          ButtonWidget(
+            text: 'Search',
+            height: 50,
+            width: 200,
             onPressed: () async {
               await controller.fetchUser();
               if (formKey.currentState!.validate()) {
@@ -66,20 +70,6 @@ class SearchUserPage extends GetView<SearchUserController> {
                 );
               }
             },
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(200, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              backgroundColor: Colors.blueAccent,
-            ),
-            child: const Text(
-              'Search',
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-              ),
-            ),
           ),
         ],
       )),
