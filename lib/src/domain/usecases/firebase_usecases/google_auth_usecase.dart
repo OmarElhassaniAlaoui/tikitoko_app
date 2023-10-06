@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tikto_app/src/app/core/errors/failures.dart';
-import 'package:tikto_app/src/domain/entities/user_auth_entity.dart';
 import 'package:tikto_app/src/domain/repositories/firebase_repository.dart';
 
 class GoogleSignInUseCase {
@@ -8,7 +8,7 @@ class GoogleSignInUseCase {
 
   GoogleSignInUseCase({required this.firebaseRepository});
 
-  Future<Either<Failure ,UserAuthEntity>> call() async {
+  Future<Either<Failure ,UserCredential>> call() async {
     return await firebaseRepository.signInWithGoogle();
   }
 }
