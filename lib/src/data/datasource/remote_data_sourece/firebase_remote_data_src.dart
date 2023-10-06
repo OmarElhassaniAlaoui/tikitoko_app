@@ -47,18 +47,18 @@ class FirebaseRemoteDataSrc implements BaseFirebaseRemoteDataSrc {
   @override
   Future<User> signInWithEmailAndPassword(String email, String password) async {
     try {
-      final credential = await firebaseAuth.signInWithEmailAndPassword(
+      final credential = await firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       return credential.user!;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
+      if (e.code == 'week-password') {
         // ignore: avoid_print
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
         // ignore: avoid_print
-        print('Wrong password provided for that user.');
+        print('The account already exists for that email.');
       }
       rethrow;
     }

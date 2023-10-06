@@ -103,14 +103,15 @@ class LoginPage extends GetView<AuthController> {
                             text: 'Login',
                             width: double.infinity,
                             height: 50,
-                            onPressed: () {
+                            onPressed: () async {
                               // validate form
                               if (formKey.currentState!.validate()) {
                                 // call login api
-                                controller.signInWithEmailAndPasswd(
-                                    _emailController.text,
-                                    _passwordController.text);
-                               
+                                await controller.signInWithEmailAndPasswd(
+                                  _emailController.text,
+                                  _passwordController.text,
+                                );
+
                                 Get.to(() => SearchUserPage());
                               }
                             },
