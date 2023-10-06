@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tikto_app/src/app/core/errors/failures.dart';
 import 'package:tikto_app/src/app/services/network_service_impl.dart';
 import 'package:tikto_app/src/data/datasource/remote_data_sourece/firebase_remote_data_src.dart';
-import 'package:tikto_app/src/domain/entities/user_auth_entity.dart';
 import 'package:tikto_app/src/domain/repositories/firebase_repository.dart';
 
-class FirebaseRepositoryImp implements FirebaseRepository {
+class FirebaseRepositoryImpl implements FirebaseRepository {
 
-  FirebaseRepositoryImp({
+  FirebaseRepositoryImpl({
     required this.firebaseRemoteDataSrc,
     required this.networkServiceImpl,
   }); 
@@ -21,7 +21,7 @@ class FirebaseRepositoryImp implements FirebaseRepository {
   }
 
   @override
-  Future<Either<Failure ,UserAuthEntity>> signInWithGoogle() async{
+  Future<Either<Failure ,UserCredential>> signInWithGoogle() async{
     if (await networkServiceImpl.isConnected()) {
       try {
         final remoteUserData = await firebaseRemoteDataSrc.signInWithGoogle();

@@ -12,10 +12,9 @@ class LoginPage extends GetView<AuthController> {
   final TextEditingController _passwordController = TextEditingController();
 
   @override
+  final controller = Get.find<AuthController>();
+  @override
   Widget build(BuildContext context) {
-    final AuthController authController = Get.put(AuthController(
-      googleSignInUseCase: Get.find(),
-    ));
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
@@ -121,31 +120,37 @@ class LoginPage extends GetView<AuthController> {
                         ),
                         SizedBox(
                           width: double.infinity,
-                          child: OutlinedButton.icon(
-                            onPressed: () async {
-                              await authController.googleSignIn();
-                              Get.to(() => SearchUserPage());
+                          child: GetBuilder<AuthController>(
+                            init:
+                                AuthController(googleSignInUseCase: Get.find()),
+                            builder: (controller) {
+                              return OutlinedButton.icon(
+                                onPressed: () async {
+                                  await controller.googleSignIn();
+                                  Get.to(() => SearchUserPage());
+                                },
+                                icon: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SvgPicture.asset(
+                                    'assets/icons/google.svg',
+                                    width: 24,
+                                    height: 24,
+                                  ),
+                                ),
+                                label: const Text(
+                                  "Login with Google",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16),
+                                ),
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  fixedSize: const Size(double.infinity, 50),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                              );
                             },
-                            icon: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SvgPicture.asset(
-                                'assets/icons/google.svg',
-                                width: 24,
-                                height: 24,
-                              ),
-                            ),
-                            label: const Text(
-                              "Login with Google",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                            ),
-                            style: OutlinedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              fixedSize: const Size(double.infinity, 50),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
                           ),
                         ),
                       ],

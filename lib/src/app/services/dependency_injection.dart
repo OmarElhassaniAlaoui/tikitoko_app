@@ -3,9 +3,13 @@ import 'package:tikto_app/src/app/core/services/api_service.dart';
 import 'package:tikto_app/src/app/services/http_service_impl.dart';
 import 'package:tikto_app/src/app/services/local_storage.dart';
 import 'package:tikto_app/src/app/services/network_service_impl.dart';
+import 'package:tikto_app/src/data/datasource/remote_data_sourece/firebase_remote_data_src.dart';
 import 'package:tikto_app/src/data/datasource/remote_data_sourece/user_remote_data_src.dart';
+import 'package:tikto_app/src/data/repositories/firebase_repository_impl.dart';
 import 'package:tikto_app/src/data/repositories/user_repository_impl.dart';
+import 'package:tikto_app/src/domain/repositories/firebase_repository.dart';
 import 'package:tikto_app/src/domain/repositories/user_repository.dart';
+import 'package:tikto_app/src/domain/usecases/firebase_usecases/google_auth_usecase.dart';
 import 'package:tikto_app/src/domain/usecases/get_following_list_usecase.dart';
 import 'package:tikto_app/src/domain/usecases/get_user_state_usecase.dart';
 import 'package:tikto_app/src/domain/usecases/get_user_usecase.dart';
@@ -16,38 +20,47 @@ import 'package:http/http.dart' as http;
 
 void initDependencies() {
   // Register your dependencies here
+  ///
+  ///========<App Services>========================
   Get.put<ApiService>(HttpServiceImpl(http.Client()), permanent: true);
+  Get.putAsync(() => LocalStorageService().init());
+  Get.lazyPut(() => NetworkServiceImpl());
+  Get.put<NetworkServiceImpl>(NetworkServiceImpl());
+  //==================== Repositories ================================================
   Get.put<UserRemoteDataSource>(
       UserRemoteDataSource(api: Get.find<ApiService>()));
-  Get.put<NetworkServiceImpl>(NetworkServiceImpl());
   Get.put<BaseUserRemoteDataSource>(
       UserRemoteDataSource(api: Get.find<ApiService>()));
+
+  Get.lazyPut(() => FirebaseRemoteDataSrc());
   Get.put<BaseUserRepository>(
     UserRepositoryImpl(
       userRemoteDataSource: Get.find<BaseUserRemoteDataSource>(),
       networkServiceImpl: Get.find<NetworkServiceImpl>(),
     ),
   );
+  Get.put<FirebaseRepository>(
+    FirebaseRepositoryImpl(
+      networkServiceImpl: Get.find<NetworkServiceImpl>(),
+      firebaseRemoteDataSrc: Get.find<FirebaseRemoteDataSrc>(),
+    ),
+  );
+
+  //========================= UseCases ====================================
   Get.put<GetUserUseCase>(GetUserUseCase(Get.find<BaseUserRepository>()));
   Get.put<GetUserStateUsecase>(
       GetUserStateUsecase(Get.find<BaseUserRepository>()));
   Get.put<GetUsersListUseCase>(
       GetUsersListUseCase(Get.find<BaseUserRepository>()));
+  //========================= Firebase use case ====================================
+  Get.put<GoogleSignInUseCase>(
+      GoogleSignInUseCase(firebaseRepository: Get.find<FirebaseRepository>()));
+  //========================= Controllers ====================================
   Get.put<TemplateController>(
       TemplateController(getUsersListUseCase: Get.find<GetUsersListUseCase>()));
-  Get.put(AuthController(
-    googleSignInUseCase: Get.find(),
-  ));
-
-  // Get.put<TemplateController>(
-  //     TemplateController(getUserUseCase: Get.find<GetUserUseCase>()));
-  // Get.put<TemplateController>(
-  //     TemplateController(getUserStateUsecase: Get.find<GetUserStateUsecase>()));
-  // local storage
-  Get.putAsync(() => LocalStorageService().init());
-  Get.lazyPut(() => NetworkServiceImpl());
-
-  Get.lazyPut(() => SearchUserController(
-        getUserUseCase: Get.find<GetUserUseCase>(),
-      ));
+  Get.lazyPut(
+      () => SearchUserController(getUserUseCase: Get.find<GetUserUseCase>()));
+  //=========================firbase Auth controller ====================================
+  Get.put<AuthController>(
+      AuthController(googleSignInUseCase: Get.find<GoogleSignInUseCase>()));
 }
