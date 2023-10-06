@@ -3,11 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class BaseFirebaseRemoteDataSrc {
-  Future<void> signInWithEmailAndPassword(String email, String password);
+  Future<User> signInWithEmailAndPassword(String email, String password);
   Future<void> createUserWithEmailAndPassword(String email, String password);
   Future<void> signOut();
   Future<void> resetPassword(String email);
   Future signInWithGoogle();
+  Future signInAnonymosly();
 }
 
 class FirebaseRemoteDataSrc implements BaseFirebaseRemoteDataSrc {
@@ -16,8 +17,26 @@ class FirebaseRemoteDataSrc implements BaseFirebaseRemoteDataSrc {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
-  Future<void> createUserWithEmailAndPassword(String email, String password) {
-    throw UnimplementedError();
+  Future<void> createUserWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      // ignore: unused_local_variable
+      final credential = await firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        // ignore: avoid_print
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        // ignore: avoid_print
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
   }
 
   @override
@@ -26,8 +45,23 @@ class FirebaseRemoteDataSrc implements BaseFirebaseRemoteDataSrc {
   }
 
   @override
-  Future<void> signInWithEmailAndPassword(String email, String password) {
-    throw UnimplementedError();
+  Future<User> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      final credential = await firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return credential.user!;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        // ignore: avoid_print
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        // ignore: avoid_print
+        print('Wrong password provided for that user.');
+      }
+      rethrow;
+    }
   }
 
   @override
@@ -35,31 +69,7 @@ class FirebaseRemoteDataSrc implements BaseFirebaseRemoteDataSrc {
     throw UnimplementedError();
   }
 
-  // sign in with google method
   @override
-  // Future<UserAuthModel?> signInWithGoogle() async {
-  //   try {
-  //     final GoogleSignInAccount? googleSignIn = await GoogleSignIn().signIn();
-  //     if (googleSignIn == null) return null;
-  //     final GoogleSignInAuthentication googleAuth =
-  //         await googleSignIn.authentication;
-  //     final AuthCredential credential = GoogleAuthProvider.credential(
-  //       accessToken: googleAuth.accessToken,
-  //       idToken: googleAuth.idToken,
-  //     );
-  //     final UserCredential userCredential =
-  //         await firebaseAuth.signInWithCredential(credential);
-  //     return UserAuthModel(
-  //       email: userCredential.user!.email!,
-  //       password: '',
-  //       uid: userCredential.user!.uid,
-  //     );
-  //   } catch (e) {
-  //     // Handle errors appropriately
-  //     rethrow;
-  //   }
-  // }
-
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -76,5 +86,24 @@ class FirebaseRemoteDataSrc implements BaseFirebaseRemoteDataSrc {
 
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  @override
+  Future<void> signInAnonymosly() async {
+    try {
+      await firebaseAuth.signInAnonymously();
+      // ignore: avoid_print
+      print("Signed in Anonymously");
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "operation-not-allowed":
+          // ignore: avoid_print
+          print("Anonymous auth hasn't been enabled for this project.");
+          break;
+        default:
+          // ignore: avoid_print
+          print("Unknown error.");
+      }
+    }
   }
 }

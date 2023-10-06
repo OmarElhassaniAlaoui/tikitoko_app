@@ -12,7 +12,20 @@
           "package_name": "com.example.tikto_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "914211602472-g6aje8jpnqd6qjt2ud2ld54beispdtgc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tikto_app",
+            "certificate_hash": "70ed87170895f7f503e94a087b1542f09fdb8268"
+          }
+        },
+        {
+          "client_id": "914211602472-g77rvpe3mar2f0g8329c07ttn21e1t4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC7OK7QZzqsclTf7Bvp4EW3k-bxx1nTMis"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "914211602472-g77rvpe3mar2f0g8329c07ttn21e1t4d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

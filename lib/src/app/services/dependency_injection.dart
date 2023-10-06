@@ -10,6 +10,8 @@ import 'package:tikto_app/src/data/repositories/user_repository_impl.dart';
 import 'package:tikto_app/src/domain/repositories/firebase_repository.dart';
 import 'package:tikto_app/src/domain/repositories/user_repository.dart';
 import 'package:tikto_app/src/domain/usecases/firebase_usecases/google_auth_usecase.dart';
+import 'package:tikto_app/src/domain/usecases/firebase_usecases/sign_in_anonyimos.dart';
+import 'package:tikto_app/src/domain/usecases/firebase_usecases/sign_in_email_passwd_usecase.dart';
 import 'package:tikto_app/src/domain/usecases/get_following_list_usecase.dart';
 import 'package:tikto_app/src/domain/usecases/get_user_state_usecase.dart';
 import 'package:tikto_app/src/domain/usecases/get_user_usecase.dart';
@@ -55,12 +57,19 @@ void initDependencies() {
   //========================= Firebase use case ====================================
   Get.put<GoogleSignInUseCase>(
       GoogleSignInUseCase(firebaseRepository: Get.find<FirebaseRepository>()));
+  Get.put<SignInAnonymUseCas>(
+      SignInAnonymUseCas(Get.find<FirebaseRepository>()));
+  Get.put<SignInWithEmailAndPasswdUsC>(
+      SignInWithEmailAndPasswdUsC(firebaseRepository: Get.find<FirebaseRepository>())); 
   //========================= Controllers ====================================
   Get.put<TemplateController>(
       TemplateController(getUsersListUseCase: Get.find<GetUsersListUseCase>()));
   Get.lazyPut(
       () => SearchUserController(getUserUseCase: Get.find<GetUserUseCase>()));
   //=========================firbase Auth controller ====================================
-  Get.put<AuthController>(
-      AuthController(googleSignInUseCase: Get.find<GoogleSignInUseCase>()));
+  Get.put<AuthController>(AuthController(
+    googleSignInUseCase: Get.find<GoogleSignInUseCase>(),
+    signInAnonymUseCas: Get.find<SignInAnonymUseCas>(),
+    signInWithEmailAndPasswdUsC: Get.find<SignInWithEmailAndPasswdUsC>(),
+  ));
 }
