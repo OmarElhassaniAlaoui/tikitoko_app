@@ -106,6 +106,11 @@ class LoginPage extends GetView<AuthController> {
                             onPressed: () {
                               // validate form
                               if (formKey.currentState!.validate()) {
+                                // call login api
+                                controller.signInWithEmailAndPasswd(
+                                    _emailController.text,
+                                    _passwordController.text);
+                               
                                 Get.to(() => SearchUserPage());
                               }
                             },
@@ -121,8 +126,6 @@ class LoginPage extends GetView<AuthController> {
                         SizedBox(
                           width: double.infinity,
                           child: GetBuilder<AuthController>(
-                            init:
-                                AuthController(googleSignInUseCase: Get.find()),
                             builder: (controller) {
                               return OutlinedButton.icon(
                                 onPressed: () async {
