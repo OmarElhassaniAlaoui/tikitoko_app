@@ -1,5 +1,8 @@
+import 'package:dartz/dartz.dart';
+import 'package:tikto_app/src/app/core/errors/failures.dart';
 import 'package:tikto_app/src/app/services/network_service_impl.dart';
 import 'package:tikto_app/src/data/datasource/remote_data_sourece/firebase_remote_data_src.dart';
+import 'package:tikto_app/src/domain/entities/user_auth_entity.dart';
 import 'package:tikto_app/src/domain/repositories/firebase_repository.dart';
 
 class FirebaseRepositoryImp implements FirebaseRepository {
@@ -18,8 +21,21 @@ class FirebaseRepositoryImp implements FirebaseRepository {
   }
 
   @override
-  Future<void> googleAuth() {
-    throw UnimplementedError();
+  Future<Either<Failure ,UserAuthEntity>> signInWithGoogle() async{
+    if (await networkServiceImpl.isConnected()) {
+      try {
+        final remoteUserData = await firebaseRemoteDataSrc.signInWithGoogle();
+        return Right(remoteUserData!);
+      } catch (e) {
+        // Handle server error
+
+        return Left(ServerFailure());
+      }
+    } else {
+      // Handle network connectivity error
+      return Left(OfflineFailure());
+    }
+   
   }
 
   @override

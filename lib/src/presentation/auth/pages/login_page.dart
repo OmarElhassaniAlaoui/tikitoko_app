@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:tikto_app/src/app/widgets/buttom_widget.dart';
+import 'package:tikto_app/src/presentation/auth/controller/auth_controller.dart';
 import 'package:tikto_app/src/presentation/search_user/pages/search_user_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends GetView<AuthController> {
   LoginPage({super.key});
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
@@ -12,6 +13,9 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthController authController = Get.put(AuthController(
+      googleSignInUseCase: Get.find(),
+    ));
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
@@ -118,7 +122,10 @@ class LoginPage extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: OutlinedButton.icon(
-                            onPressed: () {},
+                            onPressed: () async {
+                              await authController.googleSignIn();
+                              Get.to(() => SearchUserPage());
+                            },
                             icon: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: SvgPicture.asset(
