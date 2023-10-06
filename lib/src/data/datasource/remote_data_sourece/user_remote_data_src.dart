@@ -10,9 +10,9 @@ abstract class BaseUserRemoteDataSource {
   Future<List<UserModel>> getUser();
   Future<List<UserStateModel>> getUserState();  
   Future<List<UsersModel>> getUsersList();
-
 }
 
+// user remote data source implementation 
 class UserRemoteDataSource implements BaseUserRemoteDataSource {
   final ApiService api;
 
@@ -42,7 +42,6 @@ class UserRemoteDataSource implements BaseUserRemoteDataSource {
   @override
   Future<List<UsersModel>> getUsersList() async {
     final response = await api.get(ConstantManager.followingListUrl);
-
     if (response.status == 200) {
       final List<dynamic> usersJsonList = json.decode(response.body)['userList'];
       return usersJsonList.map((json) => UsersModel.fromJson(json)).toList();
