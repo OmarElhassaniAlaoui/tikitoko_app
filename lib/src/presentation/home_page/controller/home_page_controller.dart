@@ -77,6 +77,7 @@ class HomeController extends GetxController {
   }
 
   List<AccountStatModel> accountStatList = [];
+  
   void getAccountStat() {
     accountStatList = AccountStatModel.getAccountStatus();
   }
@@ -102,7 +103,9 @@ class HomeController extends GetxController {
   void onInit() {
     loadSavedFeeling();
     resetFeelingIfNewDay();
+    //! this initializate the account stat list
     getAccountStat();
+    //! this register the data to firestore when the home page is opened
     registerDataToFireStore(); 
     super.onInit();
   }
@@ -112,5 +115,5 @@ class HomeController extends GetxController {
     registerDataToFireStore();
     super.onClose();
   }
-  
+
 }

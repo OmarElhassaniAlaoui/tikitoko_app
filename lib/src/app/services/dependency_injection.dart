@@ -18,6 +18,7 @@ import 'package:tikto_app/src/domain/usecases/get_following_list_usecase.dart';
 import 'package:tikto_app/src/domain/usecases/get_user_state_usecase.dart';
 import 'package:tikto_app/src/domain/usecases/get_user_usecase.dart';
 import 'package:tikto_app/src/presentation/auth/controller/auth_controller.dart';
+import 'package:tikto_app/src/presentation/home_page/controller/user_state_controller.dart';
 import 'package:tikto_app/src/presentation/search_user/controller/search_user_controller.dart';
 import 'package:http/http.dart' as http;
 
@@ -71,6 +72,7 @@ void initDependencies() {
   //     TemplateController(getUsersListUseCase: Get.find<GetUsersListUseCase>()));
   Get.lazyPut(
       () => SearchUserController(getUserUseCase: Get.find<GetUserUseCase>()));
+  Get.put(UserStateController(getUserStateUsecase: Get.find()));
   //=========================firbase Auth controller ====================================
   Get.put<AuthController>(AuthController(
     googleSignInUseCase: Get.find<GoogleSignInUseCase>(),
