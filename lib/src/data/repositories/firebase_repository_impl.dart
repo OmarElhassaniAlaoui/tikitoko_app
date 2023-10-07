@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tikto_app/src/app/core/errors/failures.dart';
 import 'package:tikto_app/src/app/services/network_service_impl.dart';
 import 'package:tikto_app/src/data/datasource/remote_data_sourece/firebase_remote_data_src.dart';
+import 'package:tikto_app/src/domain/entities/user_firebase_entity.dart';
 import 'package:tikto_app/src/domain/repositories/firebase_repository.dart';
 
 class FirebaseRepositoryImpl implements FirebaseRepository {
@@ -13,11 +14,6 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
 
   final BaseFirebaseRemoteDataSrc firebaseRemoteDataSrc;
   final NetworkServiceImpl networkServiceImpl;
-
-  @override
-  Future<void> createUserWithEmailAndPassword(String email, String password) {
-    throw UnimplementedError();
-  }
 
   @override
   Future<Either<Failure, UserCredential>> signInWithGoogle() async {
@@ -36,10 +32,7 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
     }
   }
 
-  @override
-  Future<void> resetPassword(String email) {
-    throw UnimplementedError();
-  }
+  
 
   @override
   Future<Either<Failure, User>> signInWithEmailAndPassword(String email, String password) async{
@@ -54,11 +47,20 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
       return Left(OfflineFailure());
     }
   }
-
   @override
-  Future<void> signOut() {
-    throw UnimplementedError();
+
+  Future<void> getCreateCurrentUser(UserFirebaseEntity userFirebaseEntity) async {
+    if (await networkServiceImpl.isConnected()) {
+      try {
+        await firebaseRemoteDataSrc.getCreateCurrentUser(userFirebaseEntity);
+      } catch (e) {
+        // Handle server error
+      }
+    } else {
+      // Handle network connectivity error
+    }
   }
+
 
   @override
   Future signInAnonymosly() async {

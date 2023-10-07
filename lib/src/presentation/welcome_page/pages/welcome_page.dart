@@ -30,6 +30,8 @@ class WelcomePage extends GetView<WelcomePageController> {
             ),
             OutlinedButton(
                 onPressed: () {
+                  controller.middelWare.service.sharedPreferences
+                      .setString("step", '2');
                   Get.toNamed(AppPages.loginPage);
                 },
                 style: OutlinedButton.styleFrom(

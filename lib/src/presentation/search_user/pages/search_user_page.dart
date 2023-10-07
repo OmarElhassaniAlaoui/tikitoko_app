@@ -44,33 +44,35 @@ class SearchUserPage extends GetView<SearchUserController> {
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Please enter your username";
-                  } else if (!value.startsWith("@") &&
-                      value != "@${controller.userList[0].nickname}") {
-                    return "Please enter your username with @";
-                  } else {
-                    // save the value to share preference
-                    service.sharedPreferences.setString("username", value);
-                    return null;
+                  } else if (value.length < 3) {
+                    return "Please enter a valid username";
                   }
+                  service.sharedPreferences.setString(
+                      "username", _usernameController.text);
+                  return null;
                 },
               ),
             ),
           ),
           const SizedBox(height: 20),
-          ButtonWidget(
-            text: 'Search',
-            height: 50,
-            width: 200,
-            onPressed: () async {
-              await controller.fetchUser();
-              if (formKey.currentState!.validate()) {
-                formKey.currentState!.save();
-                Get.toNamed(
-                  AppPages.home,
-                );
-              }
-            },
-          ),
+          Obx(() {
+            return controller.isLoading.value
+                ? const Center(child: CircularProgressIndicator())
+                : ButtonWidget(
+                    text: 'Search',
+                    height: 50,
+                    width: 200,
+                    onPressed: () async {
+                      if (formKey.currentState!.validate()) {
+                        formKey.currentState!.save();
+                        await controller.fetchUser();
+                        Get.toNamed(
+                          AppPages.home,
+                        );
+                      }
+                    },
+                  );
+          }),
         ],
       )),
     );

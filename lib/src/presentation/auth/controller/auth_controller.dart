@@ -36,6 +36,8 @@ class AuthController extends GetxController {
   Future<Either<Failure, User>> signInWithEmailAndPasswd(
       String email, String passwd) async {
     final result = await signInWithEmailAndPasswdUsC.call(email, passwd);
+    service.sharedPreferences.setString("email", email);
+    service.sharedPreferences.setString("password", passwd);
     return result;
   }
 
@@ -56,7 +58,9 @@ class AuthController extends GetxController {
         // ignore: avoid_print
         print('User is currently signed out!');
       } else {
-        service.sharedPreferences.setString("step","1"); 
+        service.sharedPreferences.setString("step", "1");
+        service.sharedPreferences.setString("uid", user.uid);
+
         // ignore: avoid_print
         print('User is signed in!');
       }

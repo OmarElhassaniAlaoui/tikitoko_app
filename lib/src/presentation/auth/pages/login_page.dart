@@ -111,7 +111,6 @@ class LoginPage extends GetView<AuthController> {
                                   _emailController.text,
                                   _passwordController.text,
                                 );
-
                                 Get.to(() => SearchUserPage());
                               }
                             },

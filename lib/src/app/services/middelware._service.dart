@@ -11,8 +11,11 @@ class MiddelWare extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
     
-    if (service.sharedPreferences.getString("step") == '2') {
+    if (service.sharedPreferences.getString("step") == '3') {
       return const RouteSettings(name: AppPages.home);
+    }
+    if (service.sharedPreferences.getString("step") == '2') {
+      return const RouteSettings(name: AppPages.loginPage);
     }
 
     if (service.sharedPreferences.getString("step") == '1') {

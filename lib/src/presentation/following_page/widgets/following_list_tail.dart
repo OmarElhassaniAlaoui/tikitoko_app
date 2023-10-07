@@ -78,10 +78,21 @@ class FollowingListTailWidget extends StatelessWidget {
               ),
             ],
           ),
-          leading: CircleAvatar(
-            foregroundColor: Colors.blue,
-            backgroundImage: NetworkImage(
-                followingPageController.userList[index].user.avatarThumb),
+          leading: Container(
+            width: 50,
+            height: 50,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image.network(
+                  followingPageController.userList[index].user.avatarLarger,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                return const Icon(Icons.error);
+              }),
+            ),
           ),
           onTap: () {
             showDialog(
