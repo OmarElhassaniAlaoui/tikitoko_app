@@ -15,6 +15,7 @@ class SearchUserController extends GetxController {
   RxBool isLoading = false.obs;
 
   Future<void> fetchUser() async {
+    isLoading.value = true;
     final result = await getUserUseCase.call();
     result.fold(
       (failure) => Get.defaultDialog(
@@ -24,14 +25,13 @@ class SearchUserController extends GetxController {
         textConfirm: "Ok",
         onConfirm: () => Get.back(),
       ), // Handle error
-      (users) => userList.assignAll(users),
+      (users) {
+        isLoading.value = false;
+        userList.assignAll(users);
+        service.sharedPreferences.setString("nickname", userList[0].nickname);
+        service.sharedPreferences.setString("avatarThumb", userList[0].avatarThumb);
+        
+      },
     );
   }
-
-  @override
-  void onInit() {
-    fetchUser();
-    super.onInit();
-  }
-
 }

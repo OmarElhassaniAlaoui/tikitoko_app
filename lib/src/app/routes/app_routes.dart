@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:tikto_app/src/app/services/middelware._service.dart';
 import 'package:tikto_app/src/presentation/auth/pages/login_page.dart';
 import 'package:tikto_app/src/presentation/followers_page/pages/followers_page.dart';
 import 'package:tikto_app/src/presentation/following_page/pages/following_page.dart';
@@ -11,6 +12,7 @@ List<GetPage<dynamic>> routes = [
   GetPage(
     name: "/",
     page: () => WelcomePage(),
+    middlewares: [MiddelWare()],
   ),
   GetPage(
     name: "/template",

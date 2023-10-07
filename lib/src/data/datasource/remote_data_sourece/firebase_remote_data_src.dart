@@ -1,47 +1,52 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:tikto_app/src/app/services/local_storage.dart';
+import 'package:tikto_app/src/data/models/user_auth_model.dart';
+import 'package:tikto_app/src/domain/entities/user_firebase_entity.dart';
 
 abstract class BaseFirebaseRemoteDataSrc {
   Future<User> signInWithEmailAndPassword(String email, String password);
-  Future<void> createUserWithEmailAndPassword(String email, String password);
-  Future<void> signOut();
-  Future<void> resetPassword(String email);
+  Future<void> getCreateCurrentUser(UserFirebaseEntity userFirebaseEntity);
   Future signInWithGoogle();
   Future signInAnonymosly();
 }
+
 
 class FirebaseRemoteDataSrc implements BaseFirebaseRemoteDataSrc {
   FirebaseRemoteDataSrc();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final LocalStorageService service = LocalStorageService();
 
   @override
-  Future<void> createUserWithEmailAndPassword(
-      String email, String password) async {
-    try {
-      // ignore: unused_local_variable
-      final credential = await firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        // ignore: avoid_print
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        // ignore: avoid_print
-        print('The account already exists for that email.');
+  Future<void> getCreateCurrentUser(
+      UserFirebaseEntity userFirebaseEntity) async {
+    final userCollection = firestore.collection("users");
+    final userUid = firebaseAuth.currentUser!.uid;
+    await userCollection.doc(userUid).get().then((userDoc) {
+      final newUser = UserFirebaseModel(
+        uid: userFirebaseEntity.uid,
+        email: userFirebaseEntity.email,
+        nickName: userFirebaseEntity.nickName,
+        avatarThumb: userFirebaseEntity.avatarThumb,
+        followerCount: userFirebaseEntity.followerCount,
+        followingCount: userFirebaseEntity.followingCount,
+        videoCount: userFirebaseEntity.videoCount,
+        heartCount: userFirebaseEntity.heartCount,
+        password: userFirebaseEntity.password,
+        feeling: userFirebaseEntity.feeling,
+      ).toDocument();
+      if (!userDoc.exists) {
+        userCollection.doc(userUid).set(newUser);
+        return; 
+      } else {
+        userCollection.doc(userUid).update(newUser);
       }
-    } catch (e) {
+    }).catchError((e) {
       // ignore: avoid_print
       print(e);
-    }
-  }
-
-  @override
-  Future<void> resetPassword(String email) {
-    throw UnimplementedError();
+    });
   }
 
   @override
@@ -62,11 +67,6 @@ class FirebaseRemoteDataSrc implements BaseFirebaseRemoteDataSrc {
       }
       rethrow;
     }
-  }
-
-  @override
-  Future<void> signOut() {
-    throw UnimplementedError();
   }
 
   @override

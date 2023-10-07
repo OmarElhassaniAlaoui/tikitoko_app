@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:tikto_app/src/app/helpers/number_shorter.dart';
 import 'package:tikto_app/src/app/services/local_storage.dart';
+import 'package:tikto_app/src/domain/entities/user_firebase_entity.dart';
+import 'package:tikto_app/src/domain/usecases/firebase_usecases/get_create_current_user_usecase.dart';
 import 'package:tikto_app/src/presentation/home_page/model/account_state_model.dart';
 import 'package:tikto_app/src/presentation/home_page/model/feeling_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,14 +14,19 @@ class HomeController extends GetxController {
     Feeling("Cool", "assets/images/cool.png"),
     Feeling("Sad", "assets/images/sad.png"),
   ].obs;
-  NumberShorter numberShorter = NumberShorter(); 
+  NumberShorter numberShorter = NumberShorter();
 
   String shortNumber(int number) {
     return numberShorter.shorten(number);
   }
 
   LocalStorageService service = Get.find<LocalStorageService>();
+
   final RxInt selectedFeelingIndex = RxInt(-1);
+
+  final GetCreateCurrentUserUseCase getCreateCurrentUserUseCase =
+      Get.find<GetCreateCurrentUserUseCase>();
+
   Future<void> toggleFeeling(int index) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -74,11 +81,36 @@ class HomeController extends GetxController {
     accountStatList = AccountStatModel.getAccountStatus();
   }
 
+  void registerDataToFireStore() {
+    getCreateCurrentUserUseCase.call(
+      UserFirebaseEntity(
+        uid: service.sharedPreferences.getString("uid")??"No uid",
+        nickName: service.sharedPreferences.getString("nickname")?? "No name",
+        email: service.sharedPreferences.getString("email")?? "No email",
+        password: service.sharedPreferences.getString("password")?? "No password",
+        avatarThumb: service.sharedPreferences.getString("avatarThumb")?? "No avatar",
+        followerCount: service.sharedPreferences.getInt("followerCount").toString(), 
+        followingCount: service.sharedPreferences.getInt("followingCount").toString(),
+        heartCount: service.sharedPreferences.getInt("heartCount").toString(),
+        videoCount: service.sharedPreferences.getInt("videoCount").toString(),
+        feeling: service.sharedPreferences.getString("selectedFeeling")?? "No feeling",
+      ),
+    );
+  }
+
   @override
   void onInit() {
     loadSavedFeeling();
     resetFeelingIfNewDay();
     getAccountStat();
+    registerDataToFireStore(); 
     super.onInit();
   }
+
+  @override
+  void onClose() {
+    registerDataToFireStore();
+    super.onClose();
+  }
+  
 }

@@ -24,9 +24,19 @@ class HeaderWidget extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(4.0),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "${service.sharedPreferences.getString("avatarThumb")}"),
+              child: Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.network(
+                      "${service.sharedPreferences.getString("avatarThumb")}",
+                      fit: BoxFit.cover, errorBuilder: (BuildContext context,
+                          Object exception, StackTrace? stackTrace) {
+                    return const Icon(Icons.person);
+                  }),
+                ),
               ),
             ),
           ),
