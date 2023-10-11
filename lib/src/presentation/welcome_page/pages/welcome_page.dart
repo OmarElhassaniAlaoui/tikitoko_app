@@ -6,6 +6,7 @@ import 'package:tikto_app/src/presentation/welcome_page/controller/welcome_page_
 
 class WelcomePage extends GetView<WelcomePageController> {
   WelcomePage({super.key});
+  
   @override
   final WelcomePageController controller = Get.put(WelcomePageController());
 
@@ -32,7 +33,7 @@ class WelcomePage extends GetView<WelcomePageController> {
                 onPressed: () {
                   controller.middelWare.service.sharedPreferences
                       .setString("step", '2');
-                  Get.toNamed(AppPages.loginPage);
+                  Get.offNamed(AppPages.loginPage);
                 },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.black,

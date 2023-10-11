@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:tikto_app/src/app/routes/app_pages.dart';
 import 'package:tikto_app/src/app/widgets/buttom_widget.dart';
 import 'package:tikto_app/src/presentation/auth/controller/auth_controller.dart';
 import 'package:tikto_app/src/presentation/search_user/pages/search_user_page.dart';
@@ -10,6 +11,7 @@ class LoginPage extends GetView<AuthController> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  
 
   @override
   final controller = Get.find<AuthController>();
@@ -82,16 +84,22 @@ class LoginPage extends GetView<AuthController> {
                             }
                             return null;
                           },
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             hintText: 'Enter your password',
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(10),
                               ),
                             ),
                             isDense: true,
-                            prefixIcon: Icon(Icons.lock),
-                            suffixIcon: Icon(Icons.visibility),
+                            prefixIcon: const Icon(Icons.lock),
+                            suffixIcon: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.remove_red_eye,
+                                color: Colors.black,
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -111,7 +119,7 @@ class LoginPage extends GetView<AuthController> {
                                   _emailController.text,
                                   _passwordController.text,
                                 );
-                                Get.to(() => SearchUserPage());
+                                Get.offNamed(AppPages.searchUser);
                               }
                             },
                           ),
