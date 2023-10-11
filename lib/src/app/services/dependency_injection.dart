@@ -36,6 +36,7 @@ void initDependencies() {
       UserRemoteDataSource(api: Get.find<ApiService>()));
   Get.put<BaseUserRemoteDataSource>(
       UserRemoteDataSource(api: Get.find<ApiService>()));
+ 
 
   Get.lazyPut(() => FirebaseRemoteDataSrc());
   Get.put<BaseUserRepository>(
@@ -57,7 +58,6 @@ void initDependencies() {
       GetUserStateUsecase(Get.find<BaseUserRepository>()));
   Get.put<GetUsersListUseCase>(
       GetUsersListUseCase(Get.find<BaseUserRepository>()));
-
   //========================= Firebase use case ====================================
   Get.put<GoogleSignInUseCase>(
       GoogleSignInUseCase(firebaseRepository: Get.find<FirebaseRepository>()));

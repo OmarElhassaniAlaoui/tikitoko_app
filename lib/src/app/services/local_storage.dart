@@ -1,31 +1,37 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class LocalStorageService extends GetxService {
-
   late SharedPreferences sharedPreferences;
+
   Future<LocalStorageService> init() async {
     sharedPreferences = await SharedPreferences.getInstance();
     return this;
   }
 
- 
+  Future<void> saveImageLocaly(String imageUrl) async {
+    final file = await DefaultCacheManager().getSingleFile(imageUrl);
+    final appDir = await getApplicationDocumentsDirectory();
+    final localPath = appDir.path;
+    final fileName = imageUrl.split("/").last;
+    // ignore: unused_local_variable
+    final localFile = await file.copy('$localPath/$fileName');
+    
+  }
 
-  // static Future<void> saveData(String key, String value) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString(key, value);
-  // }
-
-  // static Future<String> getData(String key) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   return prefs.getString(key).toString();
-  // }
-
-  // static Future<void> removeData(String key) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.remove(key);
-  // }
+  Future<String> getImageLocaly(String imageUrl) async {
+    final file = await DefaultCacheManager().getSingleFile(imageUrl);
+    final appDir = await getApplicationDocumentsDirectory();
+    final localPath = appDir.path;
+    final fileName = imageUrl.split("/").last;
+    // ignore: unused_local_variable
+    final localFile = await file.copy('$localPath/$fileName');
+    return localPath;
+  }
 }
- initialService() async {
-    await Get.putAsync(() => LocalStorageService().init()); 
+
+initialService() async {
+  await Get.putAsync(() => LocalStorageService().init());
 }

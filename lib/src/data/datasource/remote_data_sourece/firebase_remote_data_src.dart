@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -12,12 +13,12 @@ abstract class BaseFirebaseRemoteDataSrc {
   Future signInAnonymosly();
 }
 
-
 class FirebaseRemoteDataSrc implements BaseFirebaseRemoteDataSrc {
   FirebaseRemoteDataSrc();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final LocalStorageService service = LocalStorageService();
+  
 
   @override
   Future<void> getCreateCurrentUser(
@@ -39,7 +40,7 @@ class FirebaseRemoteDataSrc implements BaseFirebaseRemoteDataSrc {
       ).toDocument();
       if (!userDoc.exists) {
         userCollection.doc(userUid).set(newUser);
-        return; 
+        return;
       } else {
         userCollection.doc(userUid).update(newUser);
       }
@@ -106,4 +107,7 @@ class FirebaseRemoteDataSrc implements BaseFirebaseRemoteDataSrc {
       }
     }
   }
+
+ 
+
 }

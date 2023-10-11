@@ -8,13 +8,13 @@ import 'package:tikto_app/src/domain/entities/user_state_entity.dart';
 import 'package:tikto_app/src/domain/repositories/user_repository.dart';
 
 class UserRepositoryImpl implements BaseUserRepository {
-
   UserRepositoryImpl({
     required this.userRemoteDataSource,
     required this.networkServiceImpl,
   });
 
   final BaseUserRemoteDataSource userRemoteDataSource;
+
   final NetworkServiceImpl networkServiceImpl;
 
   @override
@@ -58,11 +58,11 @@ class UserRepositoryImpl implements BaseUserRepository {
     if (await networkServiceImpl.isConnected()) {
       try {
         final usersListData = await userRemoteDataSource.getUsersList();
-       
+
         return Right(usersListData);
       } catch (e) {
         // Handle server error
-        
+
         return Left(ServerFailure());
       }
     } else {
@@ -70,24 +70,6 @@ class UserRepositoryImpl implements BaseUserRepository {
       return Left(OfflineFailure());
     }
   }
- 
 
-
- 
   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
