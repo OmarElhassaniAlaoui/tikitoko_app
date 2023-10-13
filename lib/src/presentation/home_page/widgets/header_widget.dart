@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:tikto_app/src/app/services/local_storage.dart';
+import 'package:tikto_app/src/presentation/home_page/controller/home_page_controller.dart';
 
-class HeaderWidget extends StatelessWidget {
+class HeaderWidget extends GetWidget<HomeController> {
   const HeaderWidget({
     super.key,
   });
@@ -11,6 +12,7 @@ class HeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final service = Get.put(LocalStorageService());
+    final controller = Get.put(HomeController());
     return Container(
       margin: const EdgeInsets.only(top: 20),
       child: ListTile(
@@ -49,10 +51,10 @@ class HeaderWidget extends StatelessWidget {
           ),
           trailing: InkWell(
             onTap: () {
-              // Get.toNamed('/notification');
+              controller.logOut();
             },
             child: SvgPicture.asset(
-              'assets/icons/notif.svg',
+              'assets/icons/logout.svg',
               height: 40,
               width: 40,
             ),

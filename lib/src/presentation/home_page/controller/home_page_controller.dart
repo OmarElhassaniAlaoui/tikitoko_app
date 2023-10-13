@@ -7,7 +7,7 @@ import 'package:tikto_app/src/domain/usecases/firebase_usecases/get_create_curre
 import 'package:tikto_app/src/presentation/home_page/model/account_state_model.dart';
 import 'package:tikto_app/src/presentation/home_page/model/feeling_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:tikto_app/src/app/routes/app_pages.dart';
 class HomeController extends GetxController {
   final feelings = <Feeling>[
     Feeling("Love", "assets/images/love.png"),
@@ -115,6 +115,13 @@ class HomeController extends GetxController {
       return;
     }
   }
+
+  // log out function 
+  void logOut() async {
+    await _auth.signOut();
+    await service.sharedPreferences.clear();
+    Get.offAllNamed(AppPages.loginPage);
+  } 
 
 
   void uploadImageToFireStorage(){} 
