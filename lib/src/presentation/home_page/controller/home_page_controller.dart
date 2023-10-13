@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:tikto_app/src/app/helpers/number_shorter.dart';
 import 'package:tikto_app/src/app/services/local_storage.dart';
@@ -6,7 +7,7 @@ import 'package:tikto_app/src/domain/usecases/firebase_usecases/get_create_curre
 import 'package:tikto_app/src/presentation/home_page/model/account_state_model.dart';
 import 'package:tikto_app/src/presentation/home_page/model/feeling_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:tikto_app/src/app/routes/app_pages.dart';
 class HomeController extends GetxController {
   final feelings = <Feeling>[
     Feeling("Love", "assets/images/love.png"),
@@ -20,12 +21,15 @@ class HomeController extends GetxController {
     return numberShorter.shorten(number);
   }
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   LocalStorageService service = Get.find<LocalStorageService>();
 
   final RxInt selectedFeelingIndex = RxInt(-1);
 
   final GetCreateCurrentUserUseCase getCreateCurrentUserUseCase =
       Get.find<GetCreateCurrentUserUseCase>();
+
 
   Future<void> toggleFeeling(int index) async {
     final prefs = await SharedPreferences.getInstance();
@@ -77,7 +81,7 @@ class HomeController extends GetxController {
   }
 
   List<AccountStatModel> accountStatList = [];
-  
+
   void getAccountStat() {
     accountStatList = AccountStatModel.getAccountStatus();
   }
@@ -85,19 +89,43 @@ class HomeController extends GetxController {
   void registerDataToFireStore() {
     getCreateCurrentUserUseCase.call(
       UserFirebaseEntity(
-        uid: service.sharedPreferences.getString("uid")??"No uid",
-        nickName: service.sharedPreferences.getString("nickname")?? "No name",
-        email: service.sharedPreferences.getString("email")?? "No email",
-        password: service.sharedPreferences.getString("password")?? "No password",
-        avatarThumb: service.sharedPreferences.getString("avatarThumb")?? "No avatar",
-        followerCount: service.sharedPreferences.getInt("followerCount").toString(), 
-        followingCount: service.sharedPreferences.getInt("followingCount").toString(),
+        uid: service.sharedPreferences.getString("uid") ?? "No uid",
+        nickName: service.sharedPreferences.getString("nickname") ?? "No name",
+        email: service.sharedPreferences.getString("email") ?? "No email",
+        password:
+            service.sharedPreferences.getString("password") ?? "No password",
+        avatarThumb:
+            service.sharedPreferences.getString("avatarThumb") ?? "No avatar",
+        followerCount:
+            service.sharedPreferences.getInt("followerCount").toString(),
+        followingCount:
+            service.sharedPreferences.getInt("followingCount").toString(),
         heartCount: service.sharedPreferences.getInt("heartCount").toString(),
         videoCount: service.sharedPreferences.getInt("videoCount").toString(),
-        feeling: service.sharedPreferences.getString("selectedFeeling")?? "No feeling",
+        feeling: service.sharedPreferences.getString("selectedFeeling") ??
+            "No feeling",
       ),
     );
   }
+
+  void downloadUserImage(String imageUrl) async { 
+    if(_auth.currentUser != null){ 
+      await service.saveImageLocaly(imageUrl); 
+    }else{
+      return;
+    }
+  }
+
+  // log out function 
+  void logOut() async {
+    await _auth.signOut();
+    await service.sharedPreferences.clear();
+    Get.offAllNamed(AppPages.loginPage);
+  } 
+
+
+  void uploadImageToFireStorage(){} 
+
 
   @override
   void onInit() {
@@ -106,14 +134,21 @@ class HomeController extends GetxController {
     //! this initializate the account stat list
     getAccountStat();
     //! this register the data to firestore when the home page is opened
-    registerDataToFireStore(); 
+    registerDataToFireStore();
+    
     super.onInit();
   }
+
+  @override
+  void onReady() {
+    downloadUserImage(service.sharedPreferences.getString("avatarThumb") ?? "No avatar");
+    super.onReady();
+  }
+
 
   @override
   void onClose() {
     registerDataToFireStore();
     super.onClose();
   }
-
 }

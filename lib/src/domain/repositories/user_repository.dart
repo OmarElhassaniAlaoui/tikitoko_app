@@ -10,4 +10,5 @@ abstract class BaseUserRepository {
   Future<Either<Failure ,List<UserStateEntity> >> getUserState(); 
 
   Future<Either<Failure ,List<UsersEntity> >> getUsersList();
+
 }
